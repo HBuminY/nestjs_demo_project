@@ -34,9 +34,6 @@ export class AppController {
   
   @Delete('/api/posts')
   removePost(@Body('postName')postName:string):any {
-    console.log(postName);
-    
-    
     return this.appService.removePost(postName);
   }
   

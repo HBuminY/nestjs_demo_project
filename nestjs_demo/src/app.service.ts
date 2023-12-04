@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { postModel } from './post.model';
+import { ConfigService } from '@nestjs/config/dist';
 
 const POSTS = [];
 
 @Injectable()
 export class AppService {
+  constructor(private configService: ConfigService){};
+
   getPosts():any[]{
     return POSTS;
   }
@@ -19,9 +22,7 @@ export class AppService {
 
   newPost(postName, postContent): Number{
     let newpost = new postModel(postName, postContent)
-    //console.log(newpost);
     POSTS.push(newpost);
-
     return 200 
   }
 
@@ -31,7 +32,6 @@ export class AppService {
         POSTS.splice(i,1);
       }
     })
-
     return 200
   }
 }
