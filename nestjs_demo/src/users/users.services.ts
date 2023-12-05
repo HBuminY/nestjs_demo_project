@@ -32,7 +32,7 @@ export class UsersService {
             throw new UnauthorizedException();
         };
 
-        const payload = { sub: foundUser._id, username: foundUser.name };
+        const payload = { sub: foundUser._id};
 
         return {
             access_token: await this.jwtService.signAsync(payload),
