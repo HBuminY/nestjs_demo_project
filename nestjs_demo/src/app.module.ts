@@ -8,9 +8,17 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    UsersModule,
-    ConfigModule.forRoot(),
-    MongooseModule.forRoot('mongodb+srv://Hulusi:04jzm5H4S934exj0@cluster0.djvmftp.mongodb.net/?retryWrites=true&w=majority'),
+    ConfigModule.forRoot({isGlobal:true}),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (config: ConfigService) => {
+        const uri = config.get<string>('mongodb_accessString');
+        console.log(uri);
+        
+        return({uri})
+      },
+      inject: [ConfigService],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

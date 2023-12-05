@@ -5,12 +5,16 @@ import { UsersService } from './users.services';
 export class UsersController {
     constructor(private readonly userService:UsersService){}
 
-    @Get()
-    test(){
-        return "yoo"
+    @Post('/login')
+    async loginUser(
+        @Body('username') username:string,
+        @Body('password') password:string
+    ){
+        return this.userService.signIn(username, password);
     }
+    
 
-    @Post()
+    @Post('/register')
     async createUser(
         @Body('name') name:string,
         @Body('email') email:string,

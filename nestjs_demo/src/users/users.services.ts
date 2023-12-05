@@ -1,13 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { userInterface, userScheme } from './users.model';
 import { Model } from 'mongoose';
-import { ifError } from 'assert';
+import { JwtService } from '@nestjs/jwt/dist';
 
 @Injectable()
 export class UsersService {
     constructor(
-        @InjectModel('user') private userModel:Model<userInterface>
+        @InjectModel('user') private userModel : Model<userInterface>,
+        private jwtService : JwtService
     ){}
 
     async createUser(name:string, email:string, password:string){
@@ -19,5 +20,20 @@ export class UsersService {
             return err;
         }
         
+    }
+
+    async signIn(username:string, password:string){
+        const foundUsers = await this.userModel.find({name:username})
+        const foundUser = foundUsers[0];
+
+        if(foundUser?.password !== password){
+            throw new UnauthorizedException();
+        };
+
+        const payload = { sub: foundUser._id, username: foundUser.name };
+
+        return {
+            access_token: await this.jwtService.signAsync(payload),
+        };
     }
 }
