@@ -10,12 +10,16 @@ Projeyi yerel makinenize kurmadan önce aşağıdaki adımları izlemeniz öneri
 ```
 git clone https://github.com/HBuminY/nestjs_demo_project.git
 ```
-2. Gerekli bağımlılıkları yükleyin:
+2. Nest.js Proje Root Dosyasını açın
+```
+cd nestjs_demo
+```
+3. Gerekli bağımlılıkları yükleyin:
 ```
 npm install
 ```
 
-3. Projeyi çalıştırın:
+4. Projeyi çalıştırın:
 ```
 npm run start
 ```
