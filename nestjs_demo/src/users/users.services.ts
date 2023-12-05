@@ -22,13 +22,13 @@ export class UsersService {
         
     }
 
-    async signIn(username:string, password:string){
+    async signIn(username:string, email:string, password:string){
         console.log("signing");
-        
+
         const foundUsers = await this.userModel.find({name:username})
         const foundUser = foundUsers[0];
 
-        if(foundUser?.password !== password){
+        if(foundUser?.password !== password || foundUser?.email !== email){
             throw new UnauthorizedException();
         };
 
