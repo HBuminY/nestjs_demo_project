@@ -8,17 +8,20 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({isGlobal:true}),
+    ConfigModule.forRoot({
+      isGlobal:true
+    }),
+
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (config: ConfigService) => {
         const uri = config.get<string>('mongodb_accessString');
-        console.log(uri);
-        
         return({uri})
       },
       inject: [ConfigService],
     }),
+
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],

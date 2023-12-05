@@ -23,6 +23,8 @@ export class UsersService {
     }
 
     async signIn(username:string, password:string){
+        console.log("signing");
+        
         const foundUsers = await this.userModel.find({name:username})
         const foundUser = foundUsers[0];
 
