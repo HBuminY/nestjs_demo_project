@@ -1,7 +1,7 @@
-import { Controller, Param, Get , Post, Delete, Body, Header} from '@nestjs/common';
+import { Controller, Param, Get , Post, Delete, Body, Header, UseGuards} from '@nestjs/common';
 import { UsersService } from './users.services';
 import { UserDTO } from './users.model';
-import { register } from 'module';
+import { AuthGuard } from "./jwt.strategy";
 
 @Controller('/api/users')
 export class UsersController {
@@ -19,5 +19,11 @@ export class UsersController {
         const {name, email, password} = RegisterBody;
         const createdUser = await this.userService.createUser(name, email, password)
         return createdUser;
+    }
+
+    @UseGuards(AuthGuard)
+    @Get('guarded')
+    getGuardedData(){
+        return "this data is guarded"
     }
 }

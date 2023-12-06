@@ -32,10 +32,21 @@ export class UsersService {
             throw new UnauthorizedException();
         };
 
-        const payload = { sub: foundUser._id};
+        const payload = { sub: foundUser._id}; //jtw payload contains user ID
 
         return {
             access_token: await this.jwtService.signAsync(payload),
         };
+    }
+
+    async findUser(searchObject){
+        try {
+            const foundUsers = await this.userModel.find(searchObject);
+            const foundUser = foundUsers[0];
+
+            return foundUser;
+        } catch (error) {
+            throw error;
+        }
     }
 }
