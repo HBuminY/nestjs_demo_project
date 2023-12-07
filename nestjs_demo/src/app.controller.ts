@@ -19,6 +19,8 @@ export class AppController {
       --[post /api/users/register] to register => {name:string>8, email:email, password:string>8}<br>
       --[get /api/users/login] to login => {name:string>8, email:email, password:string>8}<br>
       (routes above are accessible to unauthorized requests)<br>
+
+      --[get /api/users/guarded to test jwt strategy] this endpoint is guarded by a jwt auth strategy, use authorization header to add jwt barer retrived from /login
     `
   }
 
